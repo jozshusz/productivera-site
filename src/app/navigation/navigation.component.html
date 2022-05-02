@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <img class="productivera_logo" src="../../assets/img/logo_final.png">
+  <a class="navbar-brand" href="#">Productivera</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" data-target=".navbar-collapse.show" routerLink="/ideas" routerLinkActive="is-active">Explore</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" data-target=".navbar-collapse.show" routerLink="/community" routerLinkActive="is-active">Community</a>
+      </li>
+      <li class="nav-item" *ngIf="!loggedIn">
+        <a class="nav-link" data-toggle="collapse" data-target=".navbar-collapse.show" routerLink="/login" routerLinkActive="is-active">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="loggedIn">
+        <a class="nav-link" data-toggle="collapse" data-target=".navbar-collapse.show" routerLink="/profile" 
+        routerLinkActive="is-active">
+          <div matBadge="!" matBadgePosition="before" matBadgeColor="accent" matBadgeSize="small" [matBadgeHidden]="hideNotification">
+            Profile
+          </div>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="loggedIn">
+        <a class="nav-link" data-toggle="collapse" data-target=".navbar-collapse.show" href="#" (click)="logout($event)" routerLinkActive="is-active">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav> 

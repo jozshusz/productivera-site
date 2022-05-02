@@ -1,0 +1,258 @@
+<div class="profile_content">
+  <mat-spinner *ngIf="!profileInfo"></mat-spinner>
+  <div *ngIf="profileInfo" class="row break_words">
+    <div class="col justify-content-center text-center pic_name">
+      <img class="avatar_pic"
+      src="https://web3discover.com/img/{{profileInfo.avatar}}">
+      <div class="upload_avatar">
+        <input id="selectFileInput" #selectFileInput type="file" (change)="onFileSelected($event)" style="display: none;">
+        <input type="button" value="Browse..." onclick="document.getElementById('selectFileInput').click();"/>
+        <div>
+          <span *ngIf="selectedFile">{{selectedFile.name}}</span>
+          <span class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</span>
+          <span class="text-success" *ngIf="responseMessage">{{ responseMessage }}</span>
+        </div>
+        <button type="button" (click)="onUpload()" class="btn custom_btn upload_button">
+          <span *ngIf="loadingAvatarUpload" class="spinner-border spinner-border-sm mr-1"></span>
+          Upload
+        </button>
+      </div>
+      <h5>
+        {{ profileInfo.username }}
+      </h5>
+      <p *ngIf="!expertiseEdit && profileInfo.expertise">
+        <span class="bigger_text">Expertise:</span> {{ profileInfo.expertise }}
+        <a href="#" (click)="editExpertise($event)">
+          Edit
+        </a>
+      </p>
+      <div *ngIf="expertiseEdit">
+        <textarea type="text" rows="5" class="form-control" [(ngModel)]="newExpertiseText">{{ profileInfo.expertise }}</textarea>
+        <a [routerLink]="" (click)="saveEditExpertise()" class="save_edit">Save </a>
+        <a [routerLink]="" (click)="cancelEditExpertise()">Cancel</a>
+      </div>
+      <div *ngIf="tooManyEditExpertise" class="text-danger">
+        <div>The expertise section has to be less than 26 characters</div>
+      </div>
+      <p *ngIf="!profileInfo.expertise">
+        <span class="bigger_text">Expertise:</span> -
+        <a href="#" (click)="editExpertise($event)">
+          Edit
+        </a>
+      </p>
+      <button class="btn btn-outline-danger btn-rounded waves-effect"
+        (click)="logout($event)">
+        Sign out
+      </button>
+    </div>
+    <div class="col basic_infos">
+      <p>
+        <span class="bigger_text">From:</span> {{ profileInfo.country }}
+      </p>
+      <p *ngIf="profileInfo.description && !descEdit">
+        <span class="bigger_text">Description:</span> {{ profileInfo.description }}
+        <a href="#" (click)="editDescription($event)">
+          Edit
+        </a>
+      </p>
+      <p *ngIf="!profileInfo.description && !descEdit">
+        <span class="bigger_text">Description:</span> -
+        <a href="#" (click)="editDescription($event)">
+          Edit
+        </a>
+      </p>
+      <div *ngIf="descEdit">
+        <textarea type="text" rows="5" class="form-control" [(ngModel)]="newDescText">{{ profileInfo.description }}</textarea>
+        <a [routerLink]="" (click)="saveEditDesc()" class="save_edit">Save </a>
+        <a [routerLink]="" (click)="cancelEditDesc()">Cancel</a>
+      </div>
+      <div *ngIf="tooManyEditDesc" class="text-danger">
+        <div>The description section has to be less than 231 characters</div>
+      </div>
+      <p>
+        <span class="bigger_text">Member since:</span> {{ profileInfo.created_at | date: 'yyyy-MM-dd HH:mm' }}
+      </p>
+      <p>
+        <span class="bigger_text">Email:</span> {{ profileInfo.email }}
+      </p>
+    </div>
+  </div>
+  <div *ngIf="profileInfo" class="section_cont notifications">
+    <h2 class="section_title">Notifications</h2>
+    <mat-list>
+      <mat-list-item *ngIf="displayNotification && displayNotification.length == 0">
+        <div mat-line class="my-auto text-center">
+          <p>You don't have any notifications.</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngFor="let notification of displayNotification" [ngClass]="{'newNotificationClass': !notification.opened}">
+          <a mat-line class="notificationsClass" [routerLink]="" (click)="toggleMsgNoti(notification, true)">
+            {{ notification.message }} - {{ notification.created_at | date: 'yyyy-MM-dd HH:mm' }}
+          </a>
+          <div *ngIf="notification.show" mat-line>
+            <a *ngIf="notification.idea_id" [routerLink]="['../ideas', notification.idea_id, {comment: notification.comment_id}]">
+              Display
+            </a>
+            <a *ngIf="notification.userpost_id" [routerLink]="['../community', notification.userpost_id, {comment: notification.comment_id}]">
+              Display
+            </a>
+          </div>
+          <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <a *ngIf="!allNotifShowing && displayNotification.length>0" [routerLink]="" (click)="showMoreNotification()" class="show_all_less">
+      Show all
+    </a>
+    <a *ngIf="allNotifShowing" [routerLink]="" (click)="showLessNotification()" class="show_all_less">
+      Show less
+    </a>
+  </div>
+  <div *ngIf="profileInfo" class="section_cont messages">
+    <h2 class="section_title">Messages</h2>
+    <h3>Received messages</h3>
+    <mat-list>
+      <mat-list-item *ngIf="profileInfo.received && profileInfo.received.length == 0">
+        <div mat-line class="my-auto text-center">
+          <p>You haven't received any messages.</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item  *ngFor="let receivedMsg of profileInfo.received" [ngClass]="{'newNotificationClass': !receivedMsg.opened}">
+        <a mat-line class="receivedMessagesClass" [routerLink]="" (click)="toggleMsgNoti(receivedMsg, true)">Subject: {{ receivedMsg.header }}</a>
+        <div mat-line *ngIf="receivedMsg.show" class="message_display">
+          <p mat-line><b>Sent by:</b> {{ receivedMsg.sender.username }}</p>
+          <p mat-line class="long_text"><b>Message:</b> {{ receivedMsg.body }}</p>
+          <p mat-line><b>Date:</b> {{ receivedMsg.created_at | date: 'yyyy-MM-dd HH:mm' }}</p>
+          <button mat-button 
+          style="background-color: rgba(255, 255, 255, 0.322);" 
+          (click)="replyToMessage()">
+            Reply
+          </button>
+          <form *ngIf="replyToMsg" [formGroup]="replyMessageForm" (ngSubmit)="onSubmit()" class="replyMessageClass">
+            <div class="form-group">
+              <textarea type="text" placeholder="Your message" 
+                formControlName="messageText" id="messageText" rows="5" 
+                class="form-control reply_textarea" [ngClass]="{ 'is-invalid': submitted && f.messageText.errors }"></textarea>
+              <div *ngIf="submitted && f.messageText.errors" class="invalid-feedback">
+                <div *ngIf="f.messageText.errors.required">You have to give a text</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn custom_btn send_reply" (click)="sendTheReply(receivedMsg.sender.id, receivedMsg.header)">
+                <span *ngIf="replyLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                Send
+              </button>
+            </div>
+          </form>
+          <span class="text-success" *ngIf="replySuccess"> Message sent successfully.</span>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <h3>Sent messages</h3>
+    <mat-list>
+      <mat-list-item *ngIf="profileInfo.sent && profileInfo.sent.length == 0">
+        <div mat-line class="my-auto text-center">
+          <p>You haven't sent any messages.</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngFor="let sentMsg of profileInfo.sent">
+        <a mat-line class="sentMessagesClass" [routerLink]="" (click)="toggleMsgNoti(sentMsg, false)">Subject: {{ sentMsg.header }}</a>
+        <div mat-line *ngIf="sentMsg.show" class="message_display">
+          <p mat-line><b>To:</b> {{ sentMsg.receiver.username }}</p>
+          <p mat-line class="long_text"><b>Message:</b> {{ sentMsg.body }}</p>
+          <p mat-line><b>Date:</b> {{ sentMsg.created_at | date: 'yyyy-MM-dd HH:mm' }}</p>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="section" *ngIf="profileInfo">
+    <h2 class="sub_title">
+      My ideas:
+    </h2>
+    <div class="content">
+      <div *ngIf="profileInfo.ideas.length == 0" class="not_found_yet">
+        <p>
+          <br>You haven't posted any ideas yet.
+        </p>
+      </div>
+      <mat-card class="idea-card break_words" *ngFor="let idea of profileInfo.ideas" id="{{ idea.id }}">
+        <mat-card-header>
+            <img mat-card-avatar class="idea-header-image"
+            src="https://web3discover.com/img/{{profileInfo.avatar}}">
+            <mat-card-title>
+              <a routerLink="/profile" class="blue_link">
+                {{ profileInfo.username }}
+              </a>
+            </mat-card-title>
+            <mat-card-subtitle>{{ profileInfo.status }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="https://web3discover.com/img/{{idea.picture}}" alt="Photo of an idea">
+        <mat-card-content>
+          <h5>
+            <a [routerLink]="['../ideas/', idea.id]" class="blue_link">
+              <b>{{ (idea.title.length > 20) ? (idea.title | slice:0:20) + '...' : (idea.title) }}</b>
+            </a>
+          </h5>
+          <p>
+            {{ (idea.description.length > 40) ? (idea.description | slice:0:40) + '...' : (idea.description) }}
+          </p>
+          <p class="categories" *ngFor="let category of idea.categories">
+            <a routerLink="/ideas/byCategory/{{category.name}}" class="blue_link">
+              {{ category.name }}&nbsp;
+            </a>
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="rating">
+            {{ idea.upvotes_count }}
+          </div>
+          <a mat-button [routerLink]="['../ideas/', idea.id]">COMMENT ({{idea.comments_count}})</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <a *ngIf="profileInfo.ideas.length > 0" class="load_all" [routerLink]="['../ideas/byUser', profileInfo.id]">
+      Load all my ideas
+    </a>
+  </div>
+  <div class="section" *ngIf="profileInfo">
+    <h3 class="sub_title">
+      My community posts:
+    </h3>
+    <div class="content">
+      <div *ngIf="profileInfo.userposts.length == 0" class="not_found_yet">
+        <p>
+          <br>You don't have any community posts.
+        </p>
+      </div>
+      <mat-card class="post-card break_words" *ngFor="let post of profileInfo.userposts" id="{{ post.id }}">
+        <mat-card-header>
+            <img mat-card-avatar class="post-header-image"
+            src="https://web3discover.com/img/{{profileInfo.avatar}}">
+            <mat-card-title>
+              <a routerLink="/profile" class="blue_link">
+                {{ profileInfo.username }}
+              </a>
+            </mat-card-title>
+            <mat-card-subtitle>{{ profileInfo.status }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{ (post.text.length > 200) ? (post.text | slice:0:200) + '...' : (post.text) }}
+          </p>
+          <p class="categories" *ngFor="let category of post.categories">
+            <a routerLink="/community/byCategory/{{category.name}}" class="blue_link">
+              {{ category.name }}&nbsp;
+            </a>
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button [routerLink]="['../community/', post.id]">COMMENT ({{post.comments_count}})</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <a *ngIf="profileInfo.userposts.length > 0" class="load_all" [routerLink]="['../community/byUser', profileInfo.id]">
+      Load all my community posts
+    </a>
+  </div>
+</div>

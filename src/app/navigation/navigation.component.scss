@@ -1,0 +1,52 @@
+.navbar{
+    background-color: #621840 !important;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 1%;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.nav-item{
+    margin-right: 30px;
+}
+
+.nav-link{
+    color: rgba(255, 255, 255, 0.589) !important;
+}
+
+.nav-link:hover{
+    color: rgba(255, 255, 255, 0.849) !important;
+}
+
+.navbar-brand{
+    color: white;
+}
+
+.navbar-brand:hover{
+    color: white;
+}
+
+.navbar-brand:focus{
+    color: white;
+}
+
+.navbar-brand{
+    margin-left: 10px;
+}
+
+.productivera_logo{
+    width: 30px;
+}
+
+.is-active{
+    color: white !important;
+}
+
+.navbar-light .navbar-toggler{
+    background-color: white;
+}
+
+.nav-item{
+    text-align: center;
+}

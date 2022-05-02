@@ -1,0 +1,32 @@
+/*body{
+    background-color: rgba(255, 255, 255, 0.2);
+    background-blend-mode: lighten;
+    background-image: url('assets/img/final_back.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}*/
+
+// Colors
+$bg-color: rgb(68, 0, 37);
+$dot-color: rgb(87, 87, 87);
+
+// Dimensions
+$dot-size: 1px;
+$dot-space: 30px;
+
+body {
+	background:
+		linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+		linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+		$dot-color;
+    background-size: $dot-space $dot-space;
+    color: rgb(255, 255, 255);
+}
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+html, body{
+    height: 100%;
+}

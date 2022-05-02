@@ -1,0 +1,280 @@
+.content{
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.container{
+    margin-bottom: 5%;
+}
+
+.ideas_col, .information_prod_col, .comments_col{
+    border: 10px solid rgba(0, 0, 0, 0.2);
+    margin-right: 1%;
+    padding: 0;
+}
+
+.information_prod_col, .comments_col{
+    padding: 4%;
+}
+
+.comments_col{
+    margin-top: 3%;
+}
+
+.comment-user-avatar{
+    width: 30px;
+    height: 30px;
+}
+
+.mat-list-item{
+    color: white !important;
+}
+
+.ideas_col{
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.what_prod_desc{
+    margin-top: 4%;
+    font-size: 14px;
+}
+
+.newIdea{
+    padding-left: 4%;
+    padding-top: 2%;
+}
+
+.idea-card {
+    width: 28%;
+    color: black;
+}
+
+.idea-header-image {
+    background-size: cover;
+}
+
+.mat-card-title{
+    font-size: 16px;
+}
+
+.mat-card-subtitle{
+    font-size: 12px;
+}
+
+.rating{
+    color: rgb(0, 117, 59) !important;
+    display: inline-block;
+}
+
+.mat-card {
+    margin: 2%;
+    margin-right: 3%;
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    font-family: "Montserrat", Sans-serif;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 3px 12px #222222;
+}
+
+.mat-card-header {
+    flex-shrink: 0;
+}
+
+.mat-card-content{
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.content{
+    padding: 2%;
+    padding-top: 2%;
+}
+
+.default_prof_pic{
+    display: inline-block;
+}
+
+.form-control{
+    margin-top: 2%;
+}
+
+.newIdeaPostClass{
+    width: 40%;
+}
+
+.create_post{
+    margin-top: 2%;
+}
+
+.upvotedRating{
+    color: green;
+}
+
+.categories-section{
+    margin: 2%;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 2%;
+    background-color: rgba(255, 255, 255, 0.445);
+}
+
+.category{
+    margin: 1%;
+}
+
+.search_form{
+    margin: 2%;
+    margin-left: 0;
+}
+
+.categories{
+    color: rgb(99, 99, 99);
+    display: inline-block;
+    background-color: rgba(212, 212, 212, 0.596);
+    margin: 1%;
+    margin-left: 0;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.paginator{
+    padding-left: 4%;
+}
+
+.page-item.active .page-link{
+    color: white;
+    background-color: #BA1D4C;
+    border-color: #BA1D4C;
+}
+
+.page-link:focus{
+    box-shadow: none !important;
+}
+
+.page-link:hover{
+    background-color: #d37d97;
+    border-color: #d37d97;
+    color: black;
+}
+
+.page-link{
+    color: black;
+}
+
+.custom_btn{
+    color: white;
+    border-color: #BA1D4C;
+}
+
+.custom_btn:hover{
+    background-color: #BA1D4C;
+}
+
+.custom_btn:active{
+    color: white;
+    border-color: #BA1D4C !important;
+    background-color: #BA1D4C !important;
+}
+
+.custom_btn:focus{
+    box-shadow: none !important;
+}
+
+.search_input_field{
+    margin-top: 0 !important;
+}
+
+.new_button{
+    background: radial-gradient(#C5003B, #90004F) !important;
+    border: none;
+}
+
+.new_button:hover{
+    background: radial-gradient(#90004F, #C5003B) !important;
+}
+
+.break_words{
+    white-space: pre-line; 
+    word-wrap: break-word;
+}
+
+.mat-card-subtitle{
+    color: black;
+}
+
+a{
+    color: rgb(0, 46, 116);
+}
+
+.categories_checkbox{
+    margin-top: 2%;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+::ng-deep.mat-radio-button.mat-accent .mat-radio-outer-circle {
+   border-color:rgb(255, 255, 255)!important; /*outer ring color change*/
+}
+
+@media all and (max-width: 988px) {
+    .content{
+        padding: 0;
+        padding-top: 5%;
+    }
+    .idea-card {
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media all and (max-width: 520px) {
+    .idea-card {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .paginator{
+        padding-left: 0;
+    }
+    
+    .paginator_container{
+        width: 60%;
+        margin: 5% auto;
+    }
+
+    .newIdea{
+        padding-left: 0;
+        padding-top: 2%;
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .search_form{
+        margin-top: 7%;
+        margin-bottom: 7%;
+    }
+
+    .form-group{
+        margin: 2%;
+    }
+
+    .newIdeaPostClass{
+        width: 100%;
+    }
+
+    .newIdeaPostClass .form-group{
+        margin-left: 0;
+    }
+}
+
+.little_text{
+    font-size: 12px;
+}
