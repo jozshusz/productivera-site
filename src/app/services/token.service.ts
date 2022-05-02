@@ -41,7 +41,7 @@ export class TokenService {
   }
 
   isValid(){
-    /*const token = this.get();
+    const token = this.get();
     if(token){
       const payload = this.payload(token);
       if(payload){
@@ -49,8 +49,8 @@ export class TokenService {
         return Object.values(this.iss).indexOf(payload.iss) > -1 ? true : false;
       }
     }
-    return false;*/
-    return true;
+    return false;
+    //return true;
   }
 
   payload(token){
